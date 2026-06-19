@@ -1,0 +1,16 @@
+# MVTec-AD anomaly detection (VAE)
+#
+# GPU build (RTX 4060, CUDA 12.8) — install torch/torchvision SEPARATELY from the
+# CUDA index, NOT from this file (pip can't take an index-url per package here):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu128
+# That gives torch 2.11.0+cu128 / torchvision 0.26.0+cu128.
+#
+# For a CPU-only machine instead, use: pip install torch torchvision
+#
+# torch / torchvision are intentionally NOT pinned below — install them via the
+# command above first, then `pip install -r requirements.txt` for the rest.
+numpy>=1.26,<2.3
+scikit-learn>=1.4         # ROC / AUROC metrics
+pillow>=10.0              # image loading
+matplotlib>=3.8           # plot reconstructions + anomaly maps
+tqdm>=4.66                # training progress bars

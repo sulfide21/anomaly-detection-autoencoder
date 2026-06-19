@@ -1,0 +1,2 @@
+category,n_train,n_test,auroc_img_mse,auroc_img_ssim,auroc_pixel_ssim,seconds
+carpet,280,117,0.4651,0.5951,0.7744,618.2

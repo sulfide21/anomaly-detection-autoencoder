@@ -1,0 +1,21 @@
+# --- Python ---
+__pycache__/
+*.pyc
+venv/
+.venv/
+
+# --- Dataset: DO NOT commit (MVTec research-only license, ~5 GB) ---
+# Download from https://www.mvtec.com/company/research/datasets/mvtec-ad
+mvtec_anomaly_detection/
+
+# --- UniAD: official repo, clone separately (own git + license). See UNIAD_SETUP.md ---
+UniAD/
+
+# --- Trained weights: too large for git (~1.4 GB). Re-train via the scripts. ---
+**/models/
+*.pt
+*.pth
+*.pth.tar
+
+# --- logs / scratch ---
+*.log
