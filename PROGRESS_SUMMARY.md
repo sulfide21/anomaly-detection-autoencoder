@@ -54,7 +54,7 @@ AUROC (localization).
 > reconstructor on the *best* features beats a purpose-built transformer SOTA.
 
 ## Artifacts (where things live)
-- Pixel-VAE: `model.py`, `ssim.py`, `main.py` · results `results_vae_full/results.csv`
+- Pixel-VAE: `baseline_vae/` (model.py, ssim.py, main.py) · results `baseline_vae/results_vae_full/results.csv`
 - UniAD (ported): `UniAD/` · results `UniAD/experiments/MVTec-AD/run100.log`
 - DINO-AE: `dino_features.py`, `feat_recon.py`, `train_dino_ae.py` · results `results_dino_ae/results.csv`
 - Full method comparison + code-level explanation: `COMPARISON.md`

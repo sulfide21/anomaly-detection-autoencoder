@@ -21,6 +21,8 @@ Examples
 """
 import argparse
 import csv
+import os
+import sys
 import time
 from pathlib import Path
 
@@ -31,15 +33,14 @@ from sklearn.metrics import roc_auc_score
 from torch.utils.data import DataLoader
 from tqdm import tqdm
 
+# this script lives in baseline_vae/; add the project root so the shared modules
+# (dataset.py, common.py) are importable when run from anywhere
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from dataset import MVTecDataset
 from model import ConvVAE
 from ssim import SSIM
-
-ALL_CATEGORIES = [
-    "bottle", "cable", "capsule", "carpet", "grid", "hazelnut", "leather",
-    "metal_nut", "pill", "screw", "tile", "toothbrush", "transistor",
-    "wood", "zipper",
-]
+from common import ALL_CATEGORIES, _image_score
 
 
 def vae_loss(recon, x, mu, logvar, ssim_mod, recon_kind, beta):
@@ -72,20 +73,6 @@ def train_one(model, loader, args, device):
             avg = running / len(loader.dataset)
             print(f"    epoch {epoch:3d}/{args.epochs}  loss {avg:9.2f} "
                   f"(recon {rl:8.2f}  kl {kl:7.2f})")
-
-
-def _image_score(amap, topk_frac):
-    """Image-level score = mean of the worst `topk_frac` pixels of the map.
-
-    A small localized defect is washed out if you average over the whole image,
-    so we score by the most-anomalous region instead. topk_frac >= 1 falls back
-    to the plain whole-image mean.
-    """
-    flat = amap.flatten(1)                               # (B, H*W)
-    if topk_frac >= 1.0:
-        return flat.mean(1)
-    k = max(1, int(topk_frac * flat.shape[1]))
-    return flat.topk(k, dim=1).values.mean(1)
 
 
 @torch.no_grad()

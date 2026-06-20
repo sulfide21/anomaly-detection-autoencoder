@@ -18,7 +18,7 @@ features **beats** the purpose-built transformer SOTA.
 | file | role |
 |---|---|
 | `dataset.py` | MVTec loader (shared) |
-| `model.py`, `ssim.py`, `main.py` | Pixel-VAE: network, SSIM loss/score, train+eval |
+| `baseline_vae/` (model.py, ssim.py, main.py) | Pixel-VAE baseline: network, SSIM loss/score, train+eval |
 | `dino_features.py`, `feat_recon.py`, `train_dino_ae.py` | DINO-AE: frozen DINOv2 extractor, tiny feature-AE, train+eval |
 | `visualize_features.py` | PCA visualization of DINOv2 features |
 
@@ -38,8 +38,8 @@ Download MVTec-AD into `mvtec_anomaly_detection/` (not included — research-onl
 
 ## Run
 ```bash
-python main.py --img-size 256 --epochs 100              # Pixel-VAE, all 15
-python train_dino_ae.py --epochs 200                    # DINO-AE, all 15
+python train_dino_ae.py --epochs 200                    # DINO-AE (main method), all 15
+python baseline_vae/main.py --img-size 256 --epochs 100 # Pixel-VAE baseline, all 15
 ```
 
 *Trained on an RTX 4060 (8 GB).*

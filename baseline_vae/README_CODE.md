@@ -21,13 +21,13 @@ the gap between them (the carpet/texture story from `READING_GUIDE.md`).
 ## Run
 ```powershell
 # quick check on one category (seconds)
-python main.py --categories carpet --img-size 64 --epochs 3
+python baseline_vae/main.py --categories carpet --img-size 64 --epochs 3
 
 # recommended full run on CPU — ~4-7 h, do it overnight
-python main.py --img-size 128 --epochs 60 --save-model
+python baseline_vae/main.py --img-size 128 --epochs 60 --save-model
 
 # train with MSE reconstruction loss instead of SSIM (for comparison)
-python main.py --recon-loss mse --img-size 128 --epochs 60
+python baseline_vae/main.py --recon-loss mse --img-size 128 --epochs 60
 ```
 
 ## Output (`results/`)

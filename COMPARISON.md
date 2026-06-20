@@ -22,7 +22,7 @@ transformer.** Almost every design difference flows from that one choice.
 ## 2. Input & what is reconstructed
 
 **Ours** ([dataset.py](dataset.py)) feeds raw pixels straight into the network;
-[model.py](model.py) encodes the *image* and decodes an *image*. The decoder must
+[model.py](baseline_vae/model.py) encodes the *image* and decodes an *image*. The decoder must
 literally repaint every pixel of the carpet weave — which a 256-number latent
 cannot carry, so it collapses to a generic texture (our carpet failure).
 
@@ -47,7 +47,7 @@ well*, including the defects (then the error is zero and you detect nothing).
 Each method defends differently.
 
 **Our VAE — defense by compression.** We force everything through a narrow
-256-D latent ([model.py](model.py), `fc_mu`/`fc_logvar`) plus a KL penalty. The
+256-D latent ([model.py](baseline_vae/model.py), `fc_mu`/`fc_logvar`) plus a KL penalty. The
 hope: the bottleneck is too small to pass a defect through. The cost: it's also
 too small to pass fine *normal* texture through → blurry reconstructions.
 
@@ -87,7 +87,7 @@ decoded. This structurally breaks the "copy input → output" path.
 
 | | Our VAE | UniAD |
 |---|---|---|
-| **Train loss** | reconstruction (SSIM/MSE) **+ β·KL** ([main.py](main.py) `vae_loss`) | plain **feature MSE** ([config.yaml:30-34](UniAD/experiments/MVTec-AD/config.yaml#L30-L34)) |
+| **Train loss** | reconstruction (SSIM/MSE) **+ β·KL** ([main.py](baseline_vae/main.py) `vae_loss`) | plain **feature MSE** ([config.yaml:30-34](UniAD/experiments/MVTec-AD/config.yaml#L30-L34)) |
 | **Why simpler?** | KL needed to regularize the latent | no latent to regularize — the 3 tricks do the regularizing |
 | **Anomaly map** | per-pixel `1 − SSIM` | per-pixel L2 of feature diff ([uniad.py:92](UniAD/models/reconstructions/uniad.py#L92)) |
 | **Image score** | mean of worst top-1% pixels (`_image_score`) | **max** of avg-pooled map (paper's choice for MVTec) |
@@ -117,7 +117,7 @@ headline contribution, and it's why feature jittering + masking matter even more
 | localization (pixel) | 0.621 | **0.986** |
 
 Same task, opposite outcome — and now you can point to the exact reason in code:
-our decoder ([model.py](model.py)) must repaint the weave from 256 numbers and
+our decoder ([model.py](baseline_vae/model.py)) must repaint the weave from 256 numbers and
 can't; UniAD's reconstructor ([uniad.py](UniAD/models/reconstructions/uniad.py))
 only has to reproduce a feature vector that EfficientNet already computed.
 
@@ -170,7 +170,7 @@ UniAD wins by ~0.25 on detection *while doing the harder unified task*.
 | zipper | object | 0.725 | 0.946 | 0.840 | 0.956 |
 
 (VAE img = best of MSE/SSIM score; UniAD img = std-pooling. Full VAE CSV:
-`results_vae_full/results.csv`. UniAD log: `UniAD/experiments/MVTec-AD/run100.log`.)
+`baseline_vae/results_vae_full/results.csv`. UniAD log: `UniAD/experiments/MVTec-AD/run100.log`.)
 
 ### Two findings the numbers prove
 - **Texture collapse is real and reproducible.** carpet & grid MSE scores came

@@ -28,7 +28,7 @@ from torch.utils.data import DataLoader, TensorDataset
 from dataset import MVTecDataset
 from dino_features import DinoV2Features
 from feat_recon import FeatRecon
-from main import ALL_CATEGORIES, _image_score
+from common import ALL_CATEGORIES, _image_score
 
 
 def cosine_distance_map(rec, target):
