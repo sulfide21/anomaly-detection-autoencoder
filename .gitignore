@@ -19,3 +19,15 @@ UniAD/
 
 # --- logs / scratch ---
 *.log
+
+# --- demo outputs: derived from the (licensed) dataset, re-generate via predict.py ---
+results_dino_ae/predictions/
+results_dino_ae/thresholds.json
+
+# .md file
+COMPARISON.md
+PROGRESS_SUMMARY.md
+READING_GUIDE.md
+UNIAD_SETUP.md
+PRESENTASI.md
+baseline_vae/README_CODE.md
