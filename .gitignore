@@ -24,6 +24,9 @@ UniAD/
 results_dino_ae/predictions/
 results_dino_ae/thresholds.json
 
+# --- VAE baseline: kept local only, repo is DINO-AE focused ---
+baseline_vae/
+
 # .md file
 COMPARISON.md
 PROGRESS_SUMMARY.md
